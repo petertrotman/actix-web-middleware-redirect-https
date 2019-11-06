@@ -40,7 +40,7 @@ impl RedirectHTTPS {
     /// use actix_web_middleware_redirect_https::RedirectHTTPS;
     ///
     /// App::new()
-    ///     .wrap(RedirectHTTPS::with_replacements(&vec![(":8080".to_owned(), ":8443".to_owned())]))
+    ///     .wrap(RedirectHTTPS::with_replacements(&[(":8080".to_owned(), ":8443".to_owned())]))
     ///     .route("/", web::get().to(|| "Always HTTPS on non-default ports!"));
     /// ```
     pub fn with_replacements(replacements: &[(String, String)]) -> Self {
