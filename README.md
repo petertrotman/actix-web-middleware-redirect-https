@@ -33,6 +33,6 @@ use actix_web::{ App, web };
 use actix_web_middleware_redirect_https::RedirectHTTPS;
 
 App::new()
-    .wrap(RedirectHTTPS::with_replacements(&[":8080".to_owned(), ":8443".to_owned()]))
+    .wrap(RedirectHTTPS::with_replacements(&[(":8080".to_owned(), ":8443".to_owned())]))
     .route("/", web::get().to(|| "Always HTTPS on non-default ports!"));
 ```
