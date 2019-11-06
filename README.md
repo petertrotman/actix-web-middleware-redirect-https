@@ -1,7 +1,7 @@
 # actix-web-middleware-redirect-https
 
 
-[![Build Status](https://travis-ci.org/mre/tinysearch.svg?branch=master)](https://travis-ci.org/mre/tinysearch)
+[![Build Status](https://travis-ci.org/petertrotman/actix-web-middleware-redirect-https.svg?branch=master)](https://travis-ci.org/petertrotman/actix-web-middleware-redirect-https)
 
 A middleware for actix-web which forwards all `http` requests to `https` with optional url string replacement.
 
