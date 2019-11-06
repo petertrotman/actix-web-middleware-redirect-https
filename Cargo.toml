@@ -23,4 +23,4 @@ categories = ["web-programming", "web-programming::http-server"]
 license = "MIT"
 
 [badges]
-travis-ci = { repository = "https://travis-ci.org/petertrotman/actix-web-middleware-redirect-https" branch = "master" }
+travis-ci = { repository = "https://travis-ci.org/petertrotman/actix-web-middleware-redirect-https", branch = "master" }
