@@ -1,6 +1,6 @@
 [package]
 name = "actix-web-middleware-redirect-https"
-version = "0.1.0"
+version = "0.1.1"
 description = "A middleware for actix-web which forwards all `http` requests to `https` with optional url string replacement."
 authors = ["Peter Trotman <petertrotman@gmail.com>"]
 edition = "2018"
