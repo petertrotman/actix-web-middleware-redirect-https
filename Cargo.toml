@@ -1,26 +1,20 @@
 [package]
 name = "actix-web-middleware-redirect-https"
 version = "0.1.0"
+description = "A middleware for actix-web which forwards all `http` requests to `https` with optional url string replacement."
 authors = ["Peter Trotman <petertrotman@gmail.com>"]
 edition = "2018"
 license = "MIT"
-
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-actix-service = "0.4.2"
-actix-web = "1.0.8"
-futures = "0.1"
-
-[package]
-description = "A middleware for actix-web which forwards all `http` requests to `https` with optional url string replacement."
 documentation = "https://docs.rs/actix-web-middleware-redirect-https"
 repository = "https://github.com/petertrotman/actix-web-middleware-redirect-https"
 readme = "README.md"
 keywords = ["actix-web", "middleware", "redirect", "https", "ssl"]
 categories = ["web-programming", "web-programming::http-server"]
-license = "MIT"
+
+[dependencies]
+actix-service = "0.4.2"
+actix-web = "1.0.8"
+futures = "0.1"
 
 [badges]
 travis-ci = { repository = "https://travis-ci.org/petertrotman/actix-web-middleware-redirect-https", branch = "master" }
