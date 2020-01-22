@@ -29,7 +29,8 @@ App::new()
 ```
 By default, the middleware simply replaces the `scheme` of the URL with `https://`, but you may need to it to change other parts of the URL.
 For example, in development if you are not using the default ports (80 and 443) then you will need to specify their replacement, as below:
-```
+
+```rust
 use actix_web::{App, web, HttpResponse};
 use actix_web_middleware_redirect_https::RedirectHTTPS;
 
