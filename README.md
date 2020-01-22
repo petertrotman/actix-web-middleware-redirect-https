@@ -13,7 +13,7 @@ A middleware for actix-web which forwards all `http` requests to `https` with op
 ```toml
 # Cargo.toml
 [dependencies]
-actix-web-middleware-redirect-https = "0.1.1"
+actix-web-middleware-redirect-https = "1.0.0"
 ```
 
 ```rust
