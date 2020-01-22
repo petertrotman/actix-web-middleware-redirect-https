@@ -7,22 +7,22 @@ use actix_web::{
     dev::{ServiceRequest, ServiceResponse},
     http, Error, HttpResponse,
 };
-use futures::{
-    future::{ok, Either, FutureResult},
-    Poll,
-};
+use futures::future::{ok, Either, Ready};
+use std::task::{Context, Poll};
 
 /// Middleware for `actix-web` which redirects all `http` requests to `https` with optional url
 /// string replacements.
 ///
 /// ## Usage
 /// ```
-/// use actix_web::{App, web};
+/// use actix_web::{App, web, HttpResponse};
 /// use actix_web_middleware_redirect_https::RedirectHTTPS;
 ///
 /// App::new()
 ///     .wrap(RedirectHTTPS::default())
-///     .route("/", web::get().to(|| "Always HTTPS!"));
+///     .route("/", web::get().to(|| HttpResponse::Ok()
+///                                     .content_type("text/plain")
+///                                     .body("Always HTTPS!")));
 /// ```
 #[derive(Default, Clone)]
 pub struct RedirectHTTPS {
@@ -36,12 +36,14 @@ impl RedirectHTTPS {
     ///
     /// ## Usage
     /// ```
-    /// use actix_web::{App, web};
+    /// use actix_web::{App, web, HttpResponse};
     /// use actix_web_middleware_redirect_https::RedirectHTTPS;
     ///
     /// App::new()
     ///     .wrap(RedirectHTTPS::with_replacements(&[(":8080".to_owned(), ":8443".to_owned())]))
-    ///     .route("/", web::get().to(|| "Always HTTPS on non-default ports!"));
+    ///     .route("/", web::get().to(|| HttpResponse::Ok()
+    ///                                     .content_type("text/plain")
+    ///                                     .body("Always HTTPS on non-default ports!")));
     /// ```
     pub fn with_replacements(replacements: &[(String, String)]) -> Self {
         RedirectHTTPS {
@@ -60,7 +62,7 @@ where
     type Error = Error;
     type InitError = ();
     type Transform = RedirectHTTPSService<S>;
-    type Future = FutureResult<Self::Transform, Self::InitError>;
+    type Future = Ready<Result<Self::Transform, Self::InitError>>;
 
     fn new_transform(&self, service: S) -> Self::Future {
         ok(RedirectHTTPSService {
@@ -83,15 +85,15 @@ where
     type Request = ServiceRequest;
     type Response = ServiceResponse<B>;
     type Error = Error;
-    type Future = Either<S::Future, FutureResult<Self::Response, Self::Error>>;
+    type Future = Either<S::Future, Ready<Result<Self::Response, Self::Error>>>;
 
-    fn poll_ready(&mut self) -> Poll<(), Self::Error> {
-        self.service.poll_ready()
+    fn poll_ready(&mut self, cx: &mut Context) -> Poll<Result<(), Self::Error>> {
+        self.service.poll_ready(cx)
     }
 
     fn call(&mut self, req: ServiceRequest) -> Self::Future {
         if req.connection_info().scheme() == "https" {
-            Either::A(self.service.call(req))
+            Either::Left(self.service.call(req))
         } else {
             let host = req.connection_info().host().to_owned();
             let uri = req.uri().to_owned();
@@ -99,7 +101,7 @@ where
             for (s1, s2) in self.replacements.iter() {
                 url = url.replace(s1, s2);
             }
-            Either::B(ok(req.into_response(
+            Either::Right(ok(req.into_response(
                 HttpResponse::MovedPermanently()
                     .header(http::header::LOCATION, url)
                     .finish()
