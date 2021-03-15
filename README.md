@@ -15,7 +15,7 @@ Note: Consider using [this fork](https://crates.io/crates/actix-web-middleware-r
 ```toml
 # Cargo.toml
 [dependencies]
-actix-web-middleware-redirect-https = "1.0.0"
+actix-web-middleware-redirect-https = "3.0.1"
 ```
 
 ```rust
