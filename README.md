@@ -4,6 +4,8 @@
 
 A middleware for actix-web which forwards all `http` requests to `https` with optional url string replacement.
 
+Note: Consider using [this fork](https://crates.io/crates/actix-web-middleware-redirect-scheme/) instead
+
 [crates.io](https://crates.io/crates/actix-web-middleware-redirect-https)
 
 [docs.rs](https://docs.rs/actix-web-middleware-redirect-https)
